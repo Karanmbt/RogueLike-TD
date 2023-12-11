@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://fn732bte2ipu"]
+
+[ext_resource type="Script" path="res://Scenes/Turret/GunT1.gd" id="1_6q3td"]
+[ext_resource type="Texture2D" uid="uid://btvdwrwq1x47f" path="res://Assets/Towers/towerDefense_tile181.png" id="1_rh8r6"]
+[ext_resource type="Texture2D" uid="uid://cwg5jdxoldq7n" path="res://Assets/Towers/towerDefense_tile249.png" id="2_rmcxh"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jmher"]
+radius = 20.0
+
+[node name="GunT1" type="Node2D"]
+script = ExtResource("1_6q3td")
+
+[node name="Base" type="Sprite2D" parent="."]
+texture = ExtResource("1_rh8r6")
+
+[node name="Turret" type="Sprite2D" parent="."]
+texture = ExtResource("2_rmcxh")
+offset = Vector2(12, 0)
+
+[node name="Muzzle" type="Marker2D" parent="Turret"]
+position = Vector2(43, 0)
+
+[node name="Range" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Range"]
+shape = SubResource("CircleShape2D_jmher")
+
+[connection signal="body_entered" from="Range" to="." method="_on_range_body_entered"]
+[connection signal="body_exited" from="Range" to="." method="_on_range_body_exited"]
