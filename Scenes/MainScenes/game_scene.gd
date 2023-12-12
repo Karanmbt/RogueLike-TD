@@ -1,5 +1,8 @@
 extends Node2D
 
+signal game_finished(result)
+
+
 var map_node 
 
 var build_mode= false
@@ -12,6 +15,9 @@ var current_wave = 0
 var enemies_in_wave = 0
 
 
+var base_health = 100
+
+
 func _ready():
 	map_node = get_node("Map1")
 	for i in get_tree().get_nodes_in_group("build_buttons"):
@@ -19,9 +25,9 @@ func _ready():
 		
 	
 func _process(delta):
-	pass
 	if build_mode:
 		update_tower_preview()
+#print(base_health)
 	
 func _unhandled_input(event):
 	if event.is_action_released("ui_cancel") and build_mode == true:
@@ -44,7 +50,7 @@ func start_next_wave():
 	
 
 func retrieve_wave_data():
-	var wave_data = [['BlueTank', 1.5], ['BlueTank', 0.1]]
+	var wave_data = [['BlueTank', 0.5], ['BlueTank', 0.5], ['BlueTank', 0.5], ['BlueTank', 0.5], ['BlueTank', 0.5], ['BlueTank', 0.5], ['BlueTank', 0.5]]
 	current_wave += 1
 	enemies_in_wave = wave_data.size()
 	return wave_data
@@ -53,8 +59,10 @@ func retrieve_wave_data():
 func spawn_enemies(wave_data):
 	for i in wave_data:
 		var new_enemy = load('res://Scenes/Enemies/' + i[0] + '.tscn').instantiate()
+#		new_enemy.base_damage.connect(on_base_damage)
 		map_node.get_node('Path').add_child(new_enemy, true)
 		await get_tree().create_timer(i[1]).timeout
+		
 
 
 ##
@@ -103,6 +111,7 @@ func verify_and_build():
 		new_tower.position = build_location
 		new_tower.built = true
 		new_tower.type = build_type
+		new_tower.category = GameData.tower_data[build_type]["category"]
 		map_node.get_node("Turrets").add_child(new_tower, true)
 		map_node.get_node("TowerExclusion").set_cell(0, build_tile, 5, Vector2(1, 0))
 		# -- the Cash amount
@@ -111,3 +120,11 @@ func verify_and_build():
 ##
 # Build tower functions end above
 ##
+
+
+func on_base_damage(damage):
+	base_health -= damage
+	if base_health <= 0:
+		emit_signal('game_finished', false)
+	else:
+		get_node('UI').update_health_bar(base_health)

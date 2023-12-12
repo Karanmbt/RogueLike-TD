@@ -1,6 +1,7 @@
 extends Node2D
 
 var type
+var category
 var enemy_array = []
 var built = false
 var enemy
@@ -15,7 +16,9 @@ func _ready():
 func _physics_process(delta):
 	if enemy_array.size() != 0 and built:
 		select_enemy()
+#		if not get_node('AnimationPlayer').is_playing():
 		turn()
+			
 		if rdy:
 			fire()
 	else:
@@ -35,9 +38,20 @@ func select_enemy():
 
 func fire():
 	rdy = false
+	if category == 'Hitscan':
+		fire_gun()
+	elif category == 'Projectile':
+		fire_missile()
+
 	enemy.on_hit(GameData.tower_data[type]['damage'])
 	await get_tree().create_timer(GameData.tower_data[type]['rof']).timeout
 	rdy = true
+
+func fire_gun():
+	get_node("AnimationPlayer").play('Fire')
+
+func fire_missile():
+	pass
 
 
 func _on_range_body_entered(body):

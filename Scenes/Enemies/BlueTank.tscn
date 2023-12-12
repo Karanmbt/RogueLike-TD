@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cxyedky3kjy77"]
+[gd_scene load_steps=5 format=3 uid="uid://cxyedky3kjy77"]
 
 [ext_resource type="Script" path="res://Scenes/Enemies/BlueTank.gd" id="1_b5a63"]
 [ext_resource type="Texture2D" uid="uid://tltfakp7hcjc" path="res://Assets/Enemies/tank_blue.png" id="1_u34v0"]
+[ext_resource type="Texture2D" uid="uid://iisjpgugbwlb" path="res://Assets/UI/HPbar.jpg" id="3_pl7cl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dda7p"]
 size = Vector2(44, 42)
@@ -18,3 +19,18 @@ texture = ExtResource("1_u34v0")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(-1, 0)
 shape = SubResource("RectangleShape2D_dda7p")
+
+[node name="HeathBar" type="TextureProgressBar" parent="."]
+offset_left = -30.0
+offset_top = -32.0
+offset_right = 30.0
+offset_bottom = -26.0
+value = 50.0
+nine_patch_stretch = true
+texture_under = ExtResource("3_pl7cl")
+texture_progress = ExtResource("3_pl7cl")
+tint_under = Color(0.541176, 0.541176, 0.541176, 1)
+tint_progress = Color(0, 0.721569, 0.168627, 1)
+
+[node name="Impact" type="Marker2D" parent="."]
+position = Vector2(-15, -15)

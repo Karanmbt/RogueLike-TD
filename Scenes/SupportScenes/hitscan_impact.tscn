@@ -1,0 +1,39 @@
+[gd_scene load_steps=8 format=3 uid="uid://bu8x3whchvcco"]
+
+[ext_resource type="Texture2D" uid="uid://c4qh584vh7gka" path="res://Assets/Effects/Hitscan/Impact/explosionSmoke1.png" id="1_nqe7m"]
+[ext_resource type="Texture2D" uid="uid://68hk36c7uxo6" path="res://Assets/Effects/Hitscan/Impact/explosionSmoke2.png" id="2_785oq"]
+[ext_resource type="Texture2D" uid="uid://d4a3dabtetmwq" path="res://Assets/Effects/Hitscan/Impact/explosionSmoke3.png" id="3_q1wsl"]
+[ext_resource type="Texture2D" uid="uid://bpy3l1faymfgo" path="res://Assets/Effects/Hitscan/Impact/explosionSmoke4.png" id="4_vru13"]
+[ext_resource type="Texture2D" uid="uid://vl3fu4tnbgl7" path="res://Assets/Effects/Hitscan/Impact/explosionSmoke5.png" id="5_v6fuf"]
+[ext_resource type="Script" path="res://Scenes/SupportScenes/hitscan_impact.gd" id="6_lbrvr"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5244a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_nqe7m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_785oq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_q1wsl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_vru13")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_v6fuf")
+}],
+"loop": false,
+"name": &"Impact",
+"speed": 5.0
+}]
+
+[node name="HitscanImpact" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_5244a")
+animation = &"Impact"
+speed_scale = 4.0
+script = ExtResource("6_lbrvr")
+
+[connection signal="animation_finished" from="." to="." method="_on_animation_finished"]
